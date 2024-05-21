@@ -7,10 +7,12 @@
 	import ScatterPlot from '../components/ScatterPlot.svelte';
 	import Text from '../components/Text.svelte';
 	import Footer from '../components/Footer.svelte';
+  import CounterV2 from '../components/CounterV2.svelte';
 </script>
 
 <main>
 	<Counter />
+  <CounterV2 text={'Bla bla'} start={10000}/>
 	<div class="center">
 		<Text />
 		<MapUa />
