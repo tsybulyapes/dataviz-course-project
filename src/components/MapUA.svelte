@@ -1,0 +1,213 @@
+<script>
+	import { json, geoMercator, geoPath, groups, scaleLinear } from 'd3';
+	import csv from './official_data_uk-raw.csv';
+	import geojson from './ukraine-adm-regions.json';
+
+	let width = 0;
+	let height = 0;
+
+	let activeObl = null;
+	let positionX = 0;
+	let positionY = 0;
+
+	export let colors = ['#E30101', '#4D0000'];
+
+	const getColor = scaleLinear().domain([1, 4220]).range(colors);
+
+	$: oblData = csv.filter((row) => {
+		return row.level === 'oblast';
+	});
+
+	let mapData = {};
+	$: dataByObl = groups(oblData, (d) => d.oblast).forEach((el) => {
+		mapData[el[0]] = {
+			values: el[1],
+			total: el[1].length
+		};
+	});
+
+	$: console.log(mapData);
+
+	$: projection = geoMercator().fitSize([width, height], geojson);
+	$: pathGenerator = geoPath(projection);
+
+	let counties = [];
+	$: if (geojson)
+		counties = geojson.features.map((feature, index) => {
+			return {
+				...feature,
+				path: pathGenerator(feature),
+				id: index
+			};
+		});
+
+	function trackTooltip(event) {
+		positionX = event.layerX + 5;
+		positionY = event.layerY;
+	}
+</script>
+
+<div class="wrap">
+	<div class="head">
+		<h1>Мапа кількості повітряних тривог</h1>
+		<p class="date">24.02.22–13.04.24</p>
+	</div>
+	<main>
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="map"
+			bind:clientWidth={width}
+			bind:clientHeight={height}
+			on:mousemove={trackTooltip}
+		>
+			<svg {width} {height}>
+				{#each counties as obl}
+					{@const name = obl.properties['UA_NAME']}
+					<path
+						d={obl.path}
+						fill={name === 'Луганська область'
+							? '#4D0000'
+							: mapData[name]
+								? getColor(mapData[name]['total'])
+								: '#8C8C8C'}
+						class:pulse={name === 'Луганська область'}
+						on:mousemove={() => {
+							activeObl = obl;
+						}}
+						on:mouseleave={() => {
+							activeObl = null;
+						}}
+					/>
+				{/each}
+			</svg>
+		</div>
+
+		{#if activeObl}
+			<div class="tooltip" style={`top: ${positionY + 10}px; left: ${positionX + 90}px`}>
+				<p class="title">{activeObl.properties.UA_NAME}</p>
+				<p class="value">
+					К-сть тривог: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
+				</p>
+			</div>
+		{/if}
+
+		<div class="legend">
+			<p class="date">Кількість</p>
+			<div class="stripe"></div>
+			<div class="values">
+				<p>1</p>
+				<p>4220</p>
+			</div>
+		</div>
+	</main>
+</div>
+
+<style>
+	.wrap {
+		font-family: 'Unbounded', sans-serif;
+		margin-top: 15rem;
+		font-size: 0.85rem;
+		font-family: 'Unbounded', sans-serif;
+		color: white;
+	}
+	main {
+		position: relative;
+		background-color: black;
+		width: 100%;
+		font-size: 0.8rem;
+		font-family: 'Unbounded', sans-serif;
+		color: white;
+		margin-top: 1rem;
+	}
+
+	.map {
+		margin: 0 auto;
+		width: 85%;
+		height: 85vh;
+		overflow: hidden;
+	}
+
+	path {
+		stroke: black;
+		stroke-width: 0.2px;
+	}
+
+	path:hover {
+		opacity: 0.8;
+	}
+
+	@keyframes pulse {
+		0% {
+			opacity: 0.5;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.5;
+		}
+	}
+
+	.pulse {
+		animation: pulse 2s ease-in-out infinite;
+	}
+
+	.tooltip {
+		min-width: 200px;
+		width: 200px;
+		position: absolute;
+		background-color: rgba(0, 0, 0, 0.5);
+		padding: 10px;
+		border-radius: 5px;
+		opacity: 1;
+	}
+
+	.title {
+		font-weight: 700;
+	}
+
+	.value {
+		font-weight: 300;
+	}
+
+	.head {
+		max-width: 900px;
+		width: 100%;
+		margin: 0 auto;
+		font-size: 0.85rem;
+		font-family: 'Unbounded', sans-serif;
+		color: white;
+		margin-top: 5rem;
+	}
+
+	.date {
+		font-weight: 300;
+		font-size: 1rem;
+		margin-top: -1%;
+	}
+
+	.legend {
+		position: absolute;
+		bottom: 100px;
+		left: 120px;
+		width: 200px;
+	}
+
+	.stripe {
+		width: 100%;
+		height: 20px;
+		background: linear-gradient(90deg, #e30101, #4d0000);
+		border-radius: 5px;
+		margin-top: -8px;
+	}
+
+	.values {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.values p {
+		display: block;
+		margin-top: 5px;
+	}
+</style>
