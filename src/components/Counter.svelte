@@ -46,7 +46,7 @@
 	}
 
 	main {
-		background-image: url(dmytro-tolokonov-g5rzXf74v5U-unsplash.jpg);
+		/*background-image: url(dmytro-tolokonov-g5rzXf74v5U-unsplash.jpg);*/
 		opacity: 1;
 		max-width: 100%;
 		height: 100vh;

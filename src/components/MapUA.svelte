@@ -12,7 +12,7 @@
 
 	export let colors = ['#E30101', '#4D0000'];
 
-	const getColor = scaleLinear().domain([1, 4220]).range(colors);
+	const getColor = scaleLinear().domain([439, 4220]).range(colors);
 
 	$: oblData = csv.filter((row) => {
 		return row.level === 'oblast';
@@ -26,7 +26,7 @@
 		};
 	});
 
-	$: console.log(mapData);
+	//$: console.log(mapData);
 
 	$: projection = geoMercator().fitSize([width, height], geojson);
 	$: pathGenerator = geoPath(projection);
@@ -73,6 +73,7 @@
 						class:pulse={name === 'Луганська область'}
 						on:mousemove={() => {
 							activeObl = obl;
+              //console.log(activeObl)
 						}}
 						on:mouseleave={() => {
 							activeObl = null;
@@ -82,7 +83,7 @@
 			</svg>
 		</div>
 
-		{#if activeObl}
+		{#if activeObl && activeObl.properties.UA_NAME != 'АР Крим' && activeObl.properties.UA_NAME != 'м. Севастополь'}
 			<div class="tooltip" style={`top: ${positionY + 10}px; left: ${positionX + 90}px`}>
 				<p class="title">{activeObl.properties.UA_NAME}</p>
 				<p class="value">
@@ -95,7 +96,7 @@
 			<p class="date">Кількість</p>
 			<div class="stripe"></div>
 			<div class="values">
-				<p>1</p>
+				<p>439</p>
 				<p>4220</p>
 			</div>
 		</div>
@@ -122,10 +123,28 @@
 
 	.map {
 		margin: 0 auto;
-		width: 85%;
+		width: 100%;
 		height: 85vh;
 		overflow: hidden;
 	}
+
+  @media (max-width: 640px) {
+    .map {
+      height: 500px;
+    }
+    .legend {
+      bottom: 30px !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .map {
+      height: 320px;
+    }
+    .legend {
+      bottom: 0px !important
+    }
+  }
 
 	path {
 		stroke: black;
@@ -189,13 +208,14 @@
 	.legend {
 		position: absolute;
 		bottom: 100px;
-		left: 120px;
+    left: 5%;
 		width: 200px;
 	}
 
+
 	.stripe {
 		width: 100%;
-		height: 20px;
+		height: 10px;
 		background: linear-gradient(90deg, #e30101, #4d0000);
 		border-radius: 5px;
 		margin-top: -8px;

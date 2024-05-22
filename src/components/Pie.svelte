@@ -9,11 +9,11 @@
 
 	const arcPath = arc()
 		.innerRadius(innerRadius)
-		.outerRadius(Math.min(width, height) / 2 - 10);
+		.outerRadius(Math.min(width, height) / 2 - 25);
 </script>
 
 <div class="pie-chart">
-	<h3>{arcs.name}</h3>
+	<h3>{@html arcs.name.replace(' ', '<br>')}</h3>
 	<div class="pie-chart__content" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg {width} {height} viewBox="{-width / 2}, {-height / 2}, {width}, {height}">
 			{#each arcs.pieChartData as segment}

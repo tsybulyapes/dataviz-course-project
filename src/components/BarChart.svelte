@@ -6,8 +6,8 @@
 
 	let margin = {
 		top: 40,
-		left: 60,
-		right: 60,
+		left: 5,
+		right: 5,
 		bottom: 0
 	};
 
@@ -15,7 +15,7 @@
 	let positionX = 0;
 	let positionY = 0;
 
-	$: w = width - margin.left - margin.right;
+	$: w = width - margin.right;
 	$: h = height - margin.top - margin.bottom;
 
 	$: oblData = csv.filter((row) => {
@@ -92,7 +92,7 @@
 	>
 		<svg {width} {height}>
 			<g>
-				{#each xScale.ticks(20) as tick, index}
+				{#each xScale.ticks(width < 800 ? 10 : 20) as tick, index}
 					<line
 						x1={xScale(tick)}
 						y1={margin.top}

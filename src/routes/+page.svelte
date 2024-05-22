@@ -7,12 +7,13 @@
 	import ScatterPlot from '../components/ScatterPlot.svelte';
 	import Text from '../components/Text.svelte';
 	import Footer from '../components/Footer.svelte';
-  import CounterV2 from '../components/CounterV2.svelte';
+  import CounterV2 from '../components/Header/CounterV2.svelte';
+  import Header from '../components/Header/Header.svelte';
 </script>
 
 <main>
-	<Counter />
-  <CounterV2 text={'Bla bla'} start={10000}/>
+  <Header />
+	
 	<div class="center">
 		<Text />
 		<MapUa />
@@ -30,18 +31,20 @@
 		padding: 0;
 		box-sizing: border-box;
 		background-color: black;
-		overflow-x: hidden;
 	}
 
+
 	main {
-		width: 100vw;
 		height: 100%;
+    overflow-x: hidden;
+    
 	}
 
 	.center {
-		width: 100%;
+		width: calc(100% - 50px);
 		max-width: 1140px;
 		margin: 0 auto;
-		padding: 0 15px;
+		padding: 0 25px;
+    position: relative;
 	}
 </style>

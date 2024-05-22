@@ -3,9 +3,9 @@
   
 
   export let start = 0
-  export let end = 3000000000
-  export let duration = 8000 // in milliseconds
-  export let text = 'in cash and assets involved'
+  export let end = 38980
+  export let duration = 5000 // in milliseconds
+  export let text = 'повітряних тривог було оголошено в Україні з 24 лютого 2022 року'
   let count = start
   let interval
   let step
@@ -38,7 +38,7 @@
     
 
     <div class="value">
-      <p>${Math.round(count).toLocaleString('en-US')}</p>
+      <p>{Math.round(count)}</p>
     </div>
     <p class="text-opening">{text}</p>
   {/if}
@@ -47,30 +47,44 @@
 <style>
   .counter {
     width: 100%;
-    height: 170px;
-    max-width: 43.75rem;
-    margin: 50px auto 30px auto;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #fff
+    color: #fff;
+    font-family: 'Unbounded', sans-serif;
   }
-  .pict {
-      width: 160px;
-      margin-bottom: 10px;
-    }
+  
     .value {
-      border: solid 2px #fff;
       width: fit-content;
-      padding: 5px 20px;
-      margin-bottom: 10px;
-      border-radius: 15px;
-      min-width: 330px;
-      
+      font-weight: 700;
+      font-size: 8rem;
     }
     p {
-        font-size: 40px;
         margin: 0;
       }
+    .text-opening {
+      font-size: 2rem;
+      display: block;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    @media (max-width: 640px) {
+      .value {
+        font-size: 5rem;
+      } 
+      .text-opening {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .value {
+        font-size: 4rem;
+      } 
+      .text-opening {
+        font-size: 1.3rem;
+      }
+    }
 </style>

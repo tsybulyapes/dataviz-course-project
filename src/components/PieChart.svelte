@@ -73,7 +73,7 @@
 				percentage
 			};
 		});
-		console.log(mapData);
+		//console.log(mapData);
 
 		mapData.forEach((el) =>
 			arcsData.push({
@@ -82,7 +82,7 @@
 				pieChartData: pieChart(el.data)
 			})
 		);
-		console.log(arcsData);
+		//console.log(arcsData);
 	}
 
 	function parseDuration(alertTime, isFullFormat) {
@@ -115,6 +115,7 @@
 	const pieChart = pie()
 		.sort(null)
 		.value((d) => d.value);
+
 </script>
 
 <div class="wrap">
@@ -163,7 +164,7 @@
 <style>
 	.wrap {
 		font-family: 'Unbounded', sans-serif;
-		margin-top: 15rem;
+		margin-top: 10rem;
 		font-size: 0.85rem;
 		font-family: 'Unbounded', sans-serif;
 		color: white;
@@ -198,6 +199,15 @@
 		align-items: center;
 	}
 
+  @media (max-width: 700px) {
+    .main {
+      padding: 40px 0px;
+    }
+    .chart {
+      grid-template-columns: repeat(auto-fill, 150px);
+    }
+  }
+
 	.legend {
 		display: flex;
 		justify-content: center;
@@ -209,6 +219,7 @@
 		margin: 0;
 		padding: 0;
 	}
+ 
 
 	.legend ul li {
 		list-style: none;

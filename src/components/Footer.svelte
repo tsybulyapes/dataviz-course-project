@@ -7,9 +7,9 @@
 			завдання з дисципліни Інформаційний дизайн.<br />
 			<br />Виконала студентка 3 курсу ГД <strong>Катерина Березіна.</strong><br />Викладач
 			<strong>Роман Свердан.</strong>
-			<br /> <br /><a
-				href="https://github.com/Vadimkin/ukrainian-air-raid-sirens-dataset?tab=readme-ov-file"
-				>Дані повітряних тривог в Україні під час повномасштабного вторгнення рф</a
+			<br /> <br />
+      Джерело: 
+      <a href="https://github.com/Vadimkin/ukrainian-air-raid-sirens-dataset?tab=readme-ov-file" target="_blank"> Дані повітряних тривог в Україні під час повномасштабного вторгнення рф</a
 			>
 		</p>
 
@@ -21,8 +21,8 @@
 	main {
 		background-color: black;
 		width: 100%;
-		max-width: 800px;
-		margin-top: 20rem;
+		max-width: 700px;
+		margin-top: 10rem;
 		margin-bottom: 7rem;
 		margin-right: auto;
 		margin-left: auto;
@@ -38,6 +38,7 @@
 	p {
 		font-weight: 300;
 		font-size: 1rem;
+    line-height: 1.8;
 		font-family: 'Unbounded', sans-serif;
 		color: white;
 		width: 100%;

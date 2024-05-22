@@ -17,11 +17,11 @@
 	let margin = {
 		top: 40,
 		left: 60,
-		right: 60,
+		right: 10,
 		bottom: 0
 	};
 
-	$: chartWidth = width - margin.left - margin.right;
+	$: chartWidth = width - margin.right;
 	$: chartHeight = height - margin.top - margin.bottom;
 
 	csv.forEach((row) => {
@@ -92,7 +92,7 @@
 		showObl = selected;
 	}
 
-	$: console.log(selected);
+	//$: console.log(selected);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -105,7 +105,7 @@
 	</div>
 	<main bind:clientWidth={width} bind:clientHeight={height} on:mousemove={trackTooltip}>
 		<svg {width} {height}>
-			<g class="axis">
+			<!--<g class="axis">
 				{#each yScale.ticks(10) as tick}
 					<line
 						x1={margin.left - 10}
@@ -116,12 +116,12 @@
 						stroke-width={2}
 					/>
 				{/each}
-			</g>
+			</g>-->
 
 			<g class="axis">
 				{#each yScale.ticks(10) as tick}
 					<line
-						x1={margin.left}
+						x1={margin.left -20}
 						y1={yScale(tick)}
 						x2={chartWidth}
 						y2={yScale(tick)}
@@ -135,7 +135,7 @@
 			</g>
 
 			<g class="x-axis">
-				{#each xScale.ticks(width > 800 ? 10 : 3) as tick}
+				{#each xScale.ticks(width > 800 ? 8 : 3) as tick}
 					<line
 						x1={xScale(tick)}
 						y1={chartHeight}
@@ -166,7 +166,7 @@
 			{/each}
 
 			<line
-				x1={margin.left}
+				x1={margin.left -20}
 				y1={chartHeight}
 				x2={chartWidth}
 				y2={chartHeight}
@@ -174,14 +174,14 @@
 				stroke-width={2}
 			/>
 
-			<line
+			<!--<line
 				x1={margin.left}
 				y1={margin.top}
 				x2={margin.left}
 				y2={chartHeight}
 				stroke="white"
 				stroke-width={2}
-			/>
+			/>-->
 		</svg>
 
 		{#if activeCircle}
