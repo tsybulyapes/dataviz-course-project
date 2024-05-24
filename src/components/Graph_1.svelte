@@ -26,8 +26,6 @@
 	let width = 0;
 	let height = 0;
 
-	// const legendHeight = 250;
-
 	let margin = {
 		top: 40,
 		left: 65,
@@ -102,119 +100,96 @@
 </script>
 
 <div class="wrap">
-  <div class="head">
+	<div class="head">
 		<h1>Графік кількості повітряних тривог</h1>
 		<p class="date">За кожен рік повномасштабного вторгненя</p>
 	</div>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="chart" >
-    <div class="main" bind:clientWidth={width} bind:clientHeight={height}>
-      <svg width="100%" {height}>
-        <!--<g class="axis">
-          {#each yScale.ticks(10) as tick}
-            <line
-              x1={margin.left - 10}
-              y1={yScale(tick)}
-              x2={margin.left}
-              y2={yScale(tick)}
-              stroke="white"
-              stroke-width={2}
-            />
-          {/each}
-        </g>-->
+	<div class="chart">
+		<div class="main" bind:clientWidth={width} bind:clientHeight={height}>
+			<svg width="100%" {height}>
+				<g class="axis">
+					{#each yScale.ticks(10) as tick}
+						<line
+							x1={margin.left - 10}
+							y1={yScale(tick)}
+							x2={chartWidth}
+							y2={yScale(tick)}
+							stroke="white"
+							stroke-width={0.2}
+						/>
+						<text x={margin.left - 40} y={yScale(tick) + 6} text-anchor="middle" fill="white"
+							>{tick}</text
+						>
+					{/each}
+				</g>
 
-        <g class="axis">
-          {#each yScale.ticks(10) as tick}
-            <line
-              x1={margin.left - 10}
-              y1={yScale(tick)}
-              x2={chartWidth}
-              y2={yScale(tick)}
-              stroke="white"
-              stroke-width={0.2}
-            />
-            <text x={margin.left - 40} y={yScale(tick) + 6} text-anchor="middle" fill="white"
-              >{tick}</text
-            >
-          {/each}
-        </g>
+				<g class="axis">
+					{#each xScale.ticks(width > 800 ? 12 : 4) as tick}
+						<line
+							x1={xScale(tick)}
+							y1={chartHeight}
+							x2={xScale(tick)}
+							y2={chartHeight + 10}
+							stroke="white"
+							stroke-width={2}
+						/>
+						<text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white"
+							>{parseMonth(tick)}</text
+						>
+					{/each}
+				</g>
 
-        <g class="axis">
-          {#each xScale.ticks(width > 800 ? 12 : 4) as tick}
-            <line
-              x1={xScale(tick)}
-              y1={chartHeight}
-              x2={xScale(tick)}
-              y2={chartHeight + 10}
-              stroke="white"
-              stroke-width={2}
-            />
-            <text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white"
-              >{parseMonth(tick)}</text
-            >
-          {/each}
-        </g>
+				{#each renderedData as { path, stroke, strokeWidth, opacity }}
+					<path d={path} {stroke} stroke-width={strokeWidth} {opacity} />
+				{/each}
 
-        {#each renderedData as { path, stroke, strokeWidth, opacity }}
-          <path d={path} {stroke} stroke-width={strokeWidth} {opacity} />
-        {/each}
-
-        <line
-          x1={margin.left - 5}
-          y1={chartHeight}
-          x2={chartWidth + 5}
-          y2={chartHeight}
-          stroke="white"
-          stroke-width={2}
-        />
-
-        <!--<line
-          x1={margin.left}
-          y1={margin.top}
-          x2={margin.left}
-          y2={chartHeight}
-          stroke="white"
-          stroke-width={2}
-        />-->
-      </svg>
-    </div>
-    <div class="legend">
-      <ul>
-        <li><span style={`background: #E30101`}></span>2022</li>
-        <li><span style={`background: #ff6d00`}></span>2023</li>
-        <li><span style={`background: #ffffff`}></span>2024</li>
-      </ul>
-    </div>
-  </div>
+				<line
+					x1={margin.left - 5}
+					y1={chartHeight}
+					x2={chartWidth + 5}
+					y2={chartHeight}
+					stroke="white"
+					stroke-width={2}
+				/>
+			</svg>
+		</div>
+		<div class="legend">
+			<ul>
+				<li><span style={`background: #E30101`}></span>2022</li>
+				<li><span style={`background: #ff6d00`}></span>2023</li>
+				<li><span style={`background: #ffffff`}></span>2024</li>
+			</ul>
+		</div>
+	</div>
 </div>
 
 <style>
 	.wrap {
 		font-family: 'Unbounded', sans-serif;
-		margin-top: 5rem;
+		margin-top: 10rem;
 		font-size: 0.85rem;
 		color: white;
-  }
+	}
 
-  .head {
+	.head {
 		max-width: 900px;
 		margin: 0 auto;
 		color: #fff;
 	}
 
-  .chart {
-    display: grid;
-    grid-template-columns: 1fr 200px;
-  }
+	.chart {
+		display: grid;
+		grid-template-columns: 1fr 200px;
+	}
 
 	.main {
 		position: relative;
 		height: 600px;
 		max-width: 900px;
-    
-  }
-  
-  .date {
+	}
+
+	.date {
 		font-weight: 300;
 		font-size: 1rem;
 		margin-top: -1%;
@@ -225,10 +200,10 @@
 		stroke-linecap: round;
 	}
 
-  .legend {
-    display: flex;
-    align-items: center;
-  }
+	.legend {
+		display: flex;
+		align-items: center;
+	}
 
 	.legend ul {
 		margin: 0;
@@ -240,34 +215,34 @@
 		display: flex;
 		align-items: center;
 		margin: 5px 0;
-    width: fit-content;
+		width: fit-content;
 	}
 
 	.legend ul li span {
 		width: 80px;
-    height: 4px;
+		height: 4px;
 		margin-right: 10px;
 		border-radius: 3px;
-    display: block;
+		display: block;
 	}
 
-  @media (max-width: 800px) {
-    .chart {
-      display: block;
-    }
-    .legend {
-      justify-content: center;
-      margin-top: 20px;
-    }
-    .legend ul {
-      display: flex;
-      justify-content: flex-end;
-    }
-    .legend ul li {
-      margin-left: 15px;
-    }
-    .legend ul li span {
-      width: 40px;
-    }
-  }
+	@media (max-width: 800px) {
+		.chart {
+			display: block;
+		}
+		.legend {
+			justify-content: center;
+			margin-top: 20px;
+		}
+		.legend ul {
+			display: flex;
+			justify-content: flex-end;
+		}
+		.legend ul li {
+			margin-left: 15px;
+		}
+		.legend ul li span {
+			width: 40px;
+		}
+	}
 </style>

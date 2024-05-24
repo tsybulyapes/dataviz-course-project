@@ -91,8 +91,6 @@
 	$: if (selected) {
 		showObl = selected;
 	}
-
-	//$: console.log(selected);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -105,23 +103,10 @@
 	</div>
 	<main bind:clientWidth={width} bind:clientHeight={height} on:mousemove={trackTooltip}>
 		<svg {width} {height}>
-			<!--<g class="axis">
-				{#each yScale.ticks(10) as tick}
-					<line
-						x1={margin.left - 10}
-						y1={yScale(tick)}
-						x2={margin.left}
-						y2={yScale(tick)}
-						stroke="white"
-						stroke-width={2}
-					/>
-				{/each}
-			</g>-->
-
 			<g class="axis">
 				{#each yScale.ticks(10) as tick}
 					<line
-						x1={margin.left -20}
+						x1={margin.left - 20}
 						y1={yScale(tick)}
 						x2={chartWidth}
 						y2={yScale(tick)}
@@ -166,22 +151,13 @@
 			{/each}
 
 			<line
-				x1={margin.left -20}
+				x1={margin.left - 20}
 				y1={chartHeight}
 				x2={chartWidth}
 				y2={chartHeight}
 				stroke="white"
 				stroke-width={2}
 			/>
-
-			<!--<line
-				x1={margin.left}
-				y1={margin.top}
-				x2={margin.left}
-				y2={chartHeight}
-				stroke="white"
-				stroke-width={2}
-			/>-->
 		</svg>
 
 		{#if activeCircle}
@@ -198,7 +174,7 @@
 <style>
 	.wrap {
 		font-family: 'Unbounded', sans-serif;
-		margin-top: 15rem;
+		margin-top: 10rem;
 		font-size: 0.85rem;
 		font-family: 'Unbounded', sans-serif;
 		color: white;

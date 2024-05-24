@@ -154,7 +154,7 @@
 	}
 
 	.main {
-		margin-top: 15rem;
+		margin-top: 10rem;
 		width: 100%;
 		height: fit-content;
 		background-color: black;

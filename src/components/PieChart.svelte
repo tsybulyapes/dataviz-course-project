@@ -73,7 +73,6 @@
 				percentage
 			};
 		});
-		//console.log(mapData);
 
 		mapData.forEach((el) =>
 			arcsData.push({
@@ -82,7 +81,6 @@
 				pieChartData: pieChart(el.data)
 			})
 		);
-		//console.log(arcsData);
 	}
 
 	function parseDuration(alertTime, isFullFormat) {
@@ -115,7 +113,6 @@
 	const pieChart = pie()
 		.sort(null)
 		.value((d) => d.value);
-
 </script>
 
 <div class="wrap">
@@ -195,18 +192,24 @@
 		display: grid;
 		justify-content: space-between;
 		grid-template-columns: repeat(auto-fill, 200px);
-		grid-gap: 1em;
+		grid-gap: 2em;
 		align-items: center;
 	}
 
-  @media (max-width: 700px) {
-    .main {
-      padding: 40px 0px;
-    }
-    .chart {
-      grid-template-columns: repeat(auto-fill, 150px);
-    }
-  }
+	@media (max-width: 700px) {
+		.main {
+			padding: 40px 60px;
+		}
+		.chart {
+			grid-template-columns: repeat(auto-fill, 170px);
+		}
+	}
+
+	@media (max-width: 512px) {
+		.chart {
+			justify-content: center;
+		}
+	}
 
 	.legend {
 		display: flex;
@@ -219,7 +222,6 @@
 		margin: 0;
 		padding: 0;
 	}
- 
 
 	.legend ul li {
 		list-style: none;
