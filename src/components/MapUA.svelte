@@ -40,8 +40,8 @@
 		});
 
 	function trackTooltip(event) {
-		positionX = event.layerX + 5;
-		positionY = event.layerY;
+		positionX = event.offsetX - 80;
+		positionY = event.offsetY;
 	}
 </script>
 
