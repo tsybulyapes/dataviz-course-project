@@ -137,7 +137,7 @@
               stroke-width={2}
             />
             <text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white"
-              >{parseMonth(tick)}</text
+              >{lang != 'ua' ? monthsEng[tick-1] : monthsUa[tick-1]}</text
             >
           {/each}
         </g>
