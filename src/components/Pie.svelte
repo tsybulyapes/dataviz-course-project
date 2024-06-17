@@ -9,7 +9,7 @@
 
 	const arcPath = arc()
 		.innerRadius(innerRadius)
-		.outerRadius(Math.min(width, height) / 2 - 25);
+		.outerRadius(Math.min(width, height) / 2 - 15);
 </script>
 
 <div class="pie-chart">

@@ -30,8 +30,6 @@
 		};
 	});
 
-	//$: console.log(mapData);
-
 	$: projection = geoMercator().fitSize([width, height], geojson);
 	$: pathGenerator = geoPath(projection);
 
@@ -46,8 +44,8 @@
 		});
 
 	function trackTooltip(event) {
-		positionX = event.layerX + 5;
-		positionY = event.layerY;
+		positionX = event.offsetX - 80;
+		positionY = event.offsetY;
 	}
 
 </script>
@@ -78,7 +76,7 @@
 						class:pulse={name === 'Луганська область'}
 						on:mousemove={() => {
 							activeObl = obl;
-              //console.log(activeObl)
+							//console.log(activeObl)
 						}}
 						on:mouseleave={() => {
 							activeObl = null;
@@ -137,23 +135,23 @@
 		overflow: hidden;
 	}
 
-  @media (max-width: 640px) {
-    .map {
-      height: 500px;
-    }
-    .legend {
-      bottom: 30px !important;
-    }
-  }
+	@media (max-width: 640px) {
+		.map {
+			height: 500px;
+		}
+		.legend {
+			bottom: 30px !important;
+		}
+	}
 
-  @media (max-width: 420px) {
-    .map {
-      height: 320px;
-    }
-    .legend {
-      bottom: 0px !important
-    }
-  }
+	@media (max-width: 420px) {
+		.map {
+			height: 320px;
+		}
+		.legend {
+			bottom: 0px !important;
+		}
+	}
 
 	path {
 		stroke: black;
@@ -217,10 +215,9 @@
 	.legend {
 		position: absolute;
 		bottom: 100px;
-    left: 5%;
+		left: 5%;
 		width: 200px;
 	}
-
 
 	.stripe {
 		width: 100%;
