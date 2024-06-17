@@ -1,8 +1,10 @@
 <script>
 	import DropdownSelector from './DropdownSelector.svelte';
-	import csv from './official_data_uk-raw.csv';
+	import csv from './data/official_data_uk-raw.csv';
 	import { scaleLinear, extent } from 'd3';
 
+  export let lang = 'ua'
+  
 	let showObl = 'м. Київ';
 
 	let width = 0;
@@ -82,7 +84,7 @@
 	let unicNames = {};
 
 	csv.forEach((row) => {
-		unicNames[row.oblast] = 0;
+    unicNames[row.oblast] = 0;
 	});
 
 	$: names = Object.keys(unicNames);
@@ -92,7 +94,6 @@
 		showObl = selected;
 	}
 
-	//$: console.log(selected);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -101,7 +102,7 @@
 		<h1>Графік тривалості повітряних тривог в м. Київ</h1>
 		<p class="date">За кожен день повномасштабного вторгненя в залежності від часу доби</p>
 
-		<DropdownSelector placeholder={selected} dropdownItems={names} bind:selectedItem={selected} />
+		<DropdownSelector placeholder={selected} dropdownItems={names} bind:selectedItem={selected} {lang} />
 	</div>
 	<main bind:clientWidth={width} bind:clientHeight={height} on:mousemove={trackTooltip}>
 		<svg {width} {height}>

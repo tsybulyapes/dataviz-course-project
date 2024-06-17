@@ -2,11 +2,13 @@
 	export let placeholder = '';
 	export let dropdownItems = [];
 	export let selectedItem = '';
+  import { regions } from './store'
+  
+  export let lang = 'ua'
 
 	let selectOpen = false;
 	const selectHandler = () => {
 		selectOpen = !selectOpen;
-		console.log('Dropdown Open:', selectOpen); // Log the status of selectOpen
 	};
 
 	const handleClick = (e) => (selectedItem = e);
@@ -14,12 +16,12 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="select" class:open={selectOpen} on:click={selectHandler} on:keydown={selectHandler}>
-	<span>{placeholder}</span>
+	<span>{lang != 'ua' ? regions[placeholder] : placeholder}</span>
 	<ul class="dropdown">
 		{#each dropdownItems as d}
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<li on:click={() => handleClick(d)} on:keydown={() => handleClick(d)}>
-				{d}
+				{lang != 'ua' ? regions[d] : d}
 			</li>
 		{/each}
 	</ul>

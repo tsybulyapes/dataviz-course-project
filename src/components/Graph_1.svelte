@@ -1,16 +1,15 @@
 <script>
 	import {
-		json,
-		geoMercator,
-		geoPath,
 		groups,
 		scaleLinear,
 		extent,
 		line,
 		curveMonotoneX,
-		curveNatural
+		
 	} from 'd3';
-	import csv from './data_graph_1.csv';
+	import csv from './data/data_graph_1.csv';
+
+  export let lang = 'ua'
 
 	const colors = {
 		2022: '#E30101',
@@ -25,8 +24,6 @@
 
 	let width = 0;
 	let height = 0;
-
-	// const legendHeight = 250;
 
 	let margin = {
 		top: 40,
@@ -81,24 +78,27 @@
 		};
 	});
 
-	function parseMonth(monthNum) {
-		const monthesMap = new Map([
-			[1, 'Січ'],
-			[2, 'Лют'],
-			[3, 'Бер'],
-			[4, 'Кві'],
-			[5, 'Тра'],
-			[6, 'Чер'],
-			[7, 'Лип'],
-			[8, 'Сер'],
-			[9, 'Вер'],
-			[10, 'Жов'],
-			[11, 'Лис'],
-			[12, 'Гру']
-		]);
+	//function parseMonth(monthNum) {
+	//	const monthesMap = new Map([
+	//		[1, 'Січ'],
+	//		[2, 'Лют'],
+	//		[3, 'Бер'],
+	//		[4, 'Кві'],
+	//		[5, 'Тра'],
+	//		[6, 'Чер'],
+	//		[7, 'Лип'],
+	//		[8, 'Сер'],
+	//		[9, 'Вер'],
+	//		[10, 'Жов'],
+	//		[11, 'Лис'],
+	//		[12, 'Гру']
+	//	]);
 
-		return monthesMap.get(monthNum);
-	}
+	//	return monthesMap.get(monthNum);
+	//}
+
+  let monthsUa = ['Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер', 'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру']
+  let monthsEng = ['Jan', 'Feb', 'Mar', 'КApr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 </script>
 
 <div class="wrap">
@@ -149,9 +149,9 @@
               stroke="white"
               stroke-width={2}
             />
-            <text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white"
-              >{parseMonth(tick)}</text
-            >
+            <text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white">
+              {lang != 'ua' ? monthsEng[tick - 1] : monthsUa[tick - 1]}
+            </text>
           {/each}
         </g>
 

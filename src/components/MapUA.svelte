@@ -1,7 +1,11 @@
 <script>
 	import { json, geoMercator, geoPath, groups, scaleLinear } from 'd3';
-	import csv from './official_data_uk-raw.csv';
-	import geojson from './ukraine-adm-regions.json';
+	import csv from './data/official_data_uk-raw.csv';
+	import geojson from './data/ukraine-adm-regions.json';
+
+  export let lang = 'ua'
+  export let title = 'Мапа кількості повітряних тривог'
+  export let legendTitle = 'Кількість'
 
 	let width = 0;
 	let height = 0;
@@ -45,11 +49,12 @@
 		positionX = event.layerX + 5;
 		positionY = event.layerY;
 	}
+
 </script>
 
 <div class="wrap">
 	<div class="head">
-		<h1>Мапа кількості повітряних тривог</h1>
+		<h1>{title}</h1>
 		<p class="date">24.02.22–13.04.24</p>
 	</div>
 	<main>
@@ -85,15 +90,19 @@
 
 		{#if activeObl && activeObl.properties.UA_NAME != 'АР Крим' && activeObl.properties.UA_NAME != 'м. Севастополь'}
 			<div class="tooltip" style={`top: ${positionY + 10}px; left: ${positionX + 90}px`}>
-				<p class="title">{activeObl.properties.UA_NAME}</p>
+				<p class="title">{lang !== 'ua' ? activeObl.properties.NAME_1 : activeObl.properties.UA_NAME}</p>
 				<p class="value">
-					К-сть тривог: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
+          {#if lang !== 'ua'}
+            Total: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
+          {:else}
+					  К-сть тривог: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
+          {/if}
 				</p>
 			</div>
 		{/if}
 
 		<div class="legend">
-			<p class="date">Кількість</p>
+			<p class="date">{legendTitle}</p>
 			<div class="stripe"></div>
 			<div class="values">
 				<p>439</p>

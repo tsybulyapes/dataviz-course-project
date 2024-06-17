@@ -1,7 +1,10 @@
 <script>
 	import Pie from './Pie.svelte';
 	import { pie, groups } from 'd3';
-	import csv from './official_data_uk-raw.csv';
+	import csv from './data/official_data_uk-raw.csv';
+  import { regions } from './store'
+
+  export let lang = 'ua'
 
 	let activeCircle = null;
 	let positionX = 0;
@@ -77,7 +80,7 @@
 
 		mapData.forEach((el) =>
 			arcsData.push({
-				name: el.name,
+				name: lang != 'ua' ? regions[el.name] : el.name,
 				percentage: el.percentage,
 				pieChartData: pieChart(el.data)
 			})

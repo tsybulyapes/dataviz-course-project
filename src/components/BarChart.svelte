@@ -1,6 +1,10 @@
 <script>
 	import { scaleLinear, extent, groups } from 'd3';
-	import csv from './official_data_uk-raw.csv';
+	import csv from './data/official_data_uk-raw.csv';
+  import { regions } from './store'
+
+  export let lang = 'ua'
+
 	let width = 1000;
 	let height = 900;
 
@@ -124,7 +128,9 @@
 						}}
 					/>
 
-					<text x={margin.left} y={yScale(index) - 5} fill="white">{d.name}</text>
+					<text x={margin.left} y={yScale(index) - 5} fill="white">
+            {lang != 'ua' ? regions[d.name] : d.name}
+          </text>
 				{/each}
 			</g>
 		</svg>

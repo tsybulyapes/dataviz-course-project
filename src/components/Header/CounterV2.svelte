@@ -40,7 +40,7 @@
     <div class="value">
       <p>{Math.round(count)}</p>
     </div>
-    <p class="text-opening">{text}</p>
+    <p class="text-opening">{@html text}</p>
   {/if}
 </div>
 
