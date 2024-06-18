@@ -1,17 +1,18 @@
 <script>
 	import { scaleLinear, extent, groups } from 'd3';
 	import csv from './data/official_data_uk-raw.csv';
-  import { regions } from './store'
-  import viewport from './tools/useViewportAction';
+	import { regions } from './store';
+	import viewport from './tools/useViewportAction';
 
-  export let lang = 'ua'
+	export let lang = 'ua';
+	export let title = '10 найдовших тривог (окрім Луганської області)';
 
 	let width = 1000;
 	let height = 900;
 
-  const options = {
-    threshold: [0.5] // half height of the viewport
-  };
+	const options = {
+		threshold: [0.5] // half height of the viewport
+	};
 
 	let margin = {
 		top: 40,
@@ -23,7 +24,7 @@
 	let activeBar = null;
 	let positionX = 0;
 	let positionY = 0;
-  let showBar = false
+	let showBar = false;
 
 	$: w = width - margin.right;
 	$: h = height - margin.top - margin.bottom;
@@ -76,10 +77,11 @@
 		const minutes = Math.floor(durationSeconds / 60);
 		durationSeconds %= 60;
 
-		const fullRes = `Годин: ${hours}, хвилин: ${minutes}`;
+		const fullUaRes = `Годин: ${hours}, хвилин: ${minutes}`;
+		const fullEnRes = `Hours: ${hours}, minutes: ${minutes}`;
 		const shortRes = `${hours}`;
 
-		return isFullFormat ? fullRes : shortRes;
+		return isFullFormat ? (lang !== 'ua' ? fullEnRes : fullUaRes) : shortRes;
 	}
 
 	function trackTooltip(event) {
@@ -91,16 +93,16 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="main">
 	<div class="head">
-		<h1>10 найдовших тривог (окрім Луганської області)</h1>
-		<p class="date">24.02.22–13.04.24</p>
+		<h1>{title}</h1>
+		<p class="date">24.02.2022 - 18.06.2024</p>
 	</div>
 	<div
 		class="bar-chart"
 		bind:clientWidth={width}
 		bind:clientHeight={height}
 		on:mousemove={trackTooltip}
-    use:viewport={options}
-    on:enterViewport={() => showBar = true}
+		use:viewport={options}
+		on:enterViewport={() => (showBar = true)}
 	>
 		<svg {width} {height}>
 			<g>
@@ -137,17 +139,27 @@
 					/>
 
 					<text x={margin.left} y={yScale(index) - 5} fill="white">
-            {lang != 'ua' ? regions[d.name] : d.name}
-          </text>
+						{lang != 'ua' ? regions[d.name] : d.name}
+					</text>
 				{/each}
 			</g>
 		</svg>
 
 		{#if activeBar}
 			<div class="tooltip" style={`top: ${positionY + 10}px; left: ${positionX + 10}px`}>
-				<p class="title">Тривалість:</p>
+				<p class="title">
+					{#if lang !== 'ua'}
+						Duration:
+					{:else}
+						Тривалість:
+					{/if}
+				</p>
 				<p class="value">
-					{parseDuration(activeBar.maxDuration, true)}
+					{#if lang !== 'ua'}
+						{parseDuration(activeBar.maxDuration, true)}
+					{:else}
+						{parseDuration(activeBar.maxDuration, true)}
+					{/if}
 				</p>
 			</div>
 		{/if}
@@ -183,7 +195,7 @@
 
 	rect {
 		opacity: 0.5;
-    transition: all 1s;
+		transition: all 1s;
 	}
 
 	rect:hover {

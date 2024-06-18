@@ -3,8 +3,10 @@
 	import csv from './data/official_data_uk-raw.csv';
 	import { scaleLinear, extent } from 'd3';
 
-  export let lang = 'ua'
-  
+	export let lang = 'ua';
+	export let title = 'Графік тривалості повітряних тривог';
+	export let subTitle = 'За кожен день повномасштабного вторгненя в залежності від часу доби';
+
 	let showObl = 'м. Київ';
 
 	let width = 0;
@@ -76,15 +78,16 @@
 		const minutes = Math.floor(durationSeconds / 60);
 		durationSeconds %= 60;
 
-		const res = `Годин: ${hours}, хвилин: ${minutes}`;
+		const uaDuration = `Годин: ${hours}, хвилин: ${minutes}`;
+		const enDuration = `Hours: ${hours}, minutes: ${minutes}`;
 
-		return res;
+		return lang !== 'ua' ? enDuration : uaDuration;
 	}
 
 	let unicNames = {};
 
 	csv.forEach((row) => {
-    unicNames[row.oblast] = 0;
+		unicNames[row.oblast] = 0;
 	});
 
 	$: names = Object.keys(unicNames);
@@ -93,16 +96,20 @@
 	$: if (selected) {
 		showObl = selected;
 	}
-
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="wrap">
 	<div class="head">
-		<h1>Графік тривалості повітряних тривог в м. Київ</h1>
-		<p class="date">За кожен день повномасштабного вторгненя в залежності від часу доби</p>
+		<h1>{title}</h1>
+		<p class="date">{subTitle}</p>
 
-		<DropdownSelector placeholder={selected} dropdownItems={names} bind:selectedItem={selected} {lang} />
+		<DropdownSelector
+			placeholder={selected}
+			dropdownItems={names}
+			bind:selectedItem={selected}
+			{lang}
+		/>
 	</div>
 	<main bind:clientWidth={width} bind:clientHeight={height} on:mousemove={trackTooltip}>
 		<svg {width} {height}>
@@ -138,7 +145,7 @@
 				{/each}
 			</g>
 
-      <line
+			<line
 				x1={margin.left - 20}
 				y1={chartHeight}
 				x2={chartWidth}
@@ -161,15 +168,24 @@
 					}}
 				/>
 			{/each}
-
-			
 		</svg>
 
 		{#if activeCircle}
 			<div class="tooltip" style={`top: ${positionY + 10}px; left: ${positionX + 10}px`}>
-				<p class="title">Тривалість тривоги:</p>
+				<p class="title">
+					{#if lang !== 'ua'}
+						Duration:
+					{:else}
+						Тривалість:
+					{/if}
+				</p>
+
 				<p class="value">
-					{parseDuration(activeCircle.alertTime)}
+					{#if lang !== 'ua'}
+						{parseDuration(activeCircle.alertTime)}
+					{:else}
+						{parseDuration(activeCircle.alertTime)}
+					{/if}
 				</p>
 			</div>
 		{/if}

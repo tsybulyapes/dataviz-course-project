@@ -2,11 +2,11 @@
 	import { json, geoMercator, geoPath, groups, scaleLinear } from 'd3';
 	import csv from './data/official_data_uk-raw.csv';
 	import geojson from './data/ukraine-adm-regions.json';
-  import viewport from './tools/useViewportAction';
+	import viewport from './tools/useViewportAction';
 
-  export let lang = 'ua'
-  export let title = 'Мапа кількості повітряних тривог'
-  export let legendTitle = 'Кількість'
+	export let lang = 'ua';
+	export let title = 'Мапа кількості повітряних тривог';
+	export let legendTitle = 'Кількість';
 
 	let width = 0;
 	let height = 0;
@@ -15,11 +15,11 @@
 	let positionX = 0;
 	let positionY = 0;
 
-  const options = {
-    threshold: [0.7] // half height of the viewport
-  };
+	const options = {
+		threshold: [0.7] // half height of the viewport
+	};
 
-  let animate = false
+	let animate = false;
 
 	export let colors = ['#E30101', '#4D0000'];
 
@@ -54,13 +54,12 @@
 		positionX = event.offsetX - 80;
 		positionY = event.offsetY;
 	}
-
 </script>
 
 <div class="wrap">
 	<div class="head">
 		<h1>{title}</h1>
-		<p class="date">24.02.22–13.04.24</p>
+		<p class="date">24.02.2022 - 18.06.2024</p>
 	</div>
 	<main>
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -69,22 +68,21 @@
 			bind:clientWidth={width}
 			bind:clientHeight={height}
 			on:mousemove={trackTooltip}
-      use:viewport={options}
-      on:enterViewport={() => animate = true}
+			use:viewport={options}
+			on:enterViewport={() => (animate = true)}
 		>
 			<svg {width} {height}>
 				{#each counties as obl}
 					{@const name = obl.properties['UA_NAME']}
 					<path
 						d={obl.path}
-						fill={
-            animate ?
-              name === 'Луганська область'
-							? '#4D0000'
-							: mapData[name]
-								? getColor(mapData[name]['total'])
-								: '#8C8C8C'
-              : '#111'}
+						fill={animate
+							? name === 'Луганська область'
+								? '#4D0000'
+								: mapData[name]
+									? getColor(mapData[name]['total'])
+									: '#8C8C8C'
+							: '#111'}
 						class:pulse={name === 'Луганська область'}
 						on:mousemove={() => {
 							activeObl = obl;
@@ -100,13 +98,15 @@
 
 		{#if activeObl && activeObl.properties.UA_NAME != 'АР Крим' && activeObl.properties.UA_NAME != 'м. Севастополь'}
 			<div class="tooltip" style={`top: ${positionY + 10}px; left: ${positionX + 90}px`}>
-				<p class="title">{lang !== 'ua' ? activeObl.properties.NAME_1 : activeObl.properties.UA_NAME}</p>
+				<p class="title">
+					{lang !== 'ua' ? activeObl.properties.NAME_1 : activeObl.properties.UA_NAME}
+				</p>
 				<p class="value">
-          {#if lang !== 'ua'}
-            Total: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
-          {:else}
-					  К-сть тривог: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
-          {/if}
+					{#if lang !== 'ua'}
+						Total: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
+					{:else}
+						К-сть тривог: <strong> {mapData[activeObl.properties.UA_NAME].total}</strong>
+					{/if}
 				</p>
 			</div>
 		{/if}
@@ -167,7 +167,7 @@
 	path {
 		stroke: black;
 		stroke-width: 0.2px;
-    transition: fill 1.5s ease-out;
+		transition: fill 1.5s ease-out;
 	}
 
 	path:hover {

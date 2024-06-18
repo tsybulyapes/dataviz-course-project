@@ -2,9 +2,11 @@
 	import Pie from './Pie.svelte';
 	import { pie, groups } from 'd3';
 	import csv from './data/official_data_uk-raw.csv';
-  import { regions } from './store'
+	import { regions } from './store';
 
-  export let lang = 'ua'
+	export let lang = 'ua';
+	export let title = 'Співвідношення часу з тривогою та без';
+	export let subTitle = '10 областей з найбільшою кількістю тривог';
 
 	let activeCircle = null;
 	let positionX = 0;
@@ -14,8 +16,20 @@
 	let height = 200;
 
 	let legend = [
-		{ name: 'З тривогою', fill: '#E30101' },
-		{ name: 'Без тривоги', fill: '#4D0000' }
+		{
+			name: {
+				ua: 'З тривогою',
+				en: 'With air raid alarm'
+			},
+			fill: '#E30101'
+		},
+		{
+			name: {
+				ua: 'Без тривоги',
+				en: 'Without air raid alarm'
+			},
+			fill: '#4D0000'
+		}
 	];
 
 	$: oblData = csv.filter((row) => {
@@ -120,8 +134,8 @@
 
 <div class="wrap">
 	<div class="head">
-		<h1>Співвідношення часу з тривогою та без</h1>
-		<p class="date">10 областей з найбільшою кількістю тривог</p>
+		<h1>{title}</h1>
+		<p class="date">{subTitle}</p>
 	</div>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="main" on:mousemove={trackTooltip}>
@@ -143,21 +157,12 @@
 				<ul>
 					{#each legend as l}
 						<li>
-							<span style={`background: ${l.fill}`}></span>{l.name}
+							<span style={`background: ${l.fill}`}></span>{lang !== 'ua' ? l.name.en : l.name.ua}
 						</li>
 					{/each}
 				</ul>
 			</div>
 		</div>
-
-		{#if activeCircle}
-			<div class="tooltip" style={`top: ${positionY + 90}px; left: ${positionX + 10}px`}>
-				<p class="title">Тривалість тривоги:</p>
-				<p class="value">
-					{parseDuration(activeCircle.alertTime)}
-				</p>
-			</div>
-		{/if}
 	</div>
 </div>
 
@@ -238,24 +243,5 @@
 		height: 15px;
 		margin-right: 10px;
 		border-radius: 50%;
-	}
-
-	.tooltip {
-		min-width: 200px;
-		width: 200px;
-		position: absolute;
-		background-color: rgba(0, 0, 0, 0.5);
-		padding: 10px;
-		border-radius: 5px;
-		opacity: 1;
-		color: white;
-	}
-
-	.title {
-		font-weight: 700;
-	}
-
-	.value {
-		font-weight: 300;
 	}
 </style>

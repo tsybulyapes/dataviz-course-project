@@ -1,15 +1,10 @@
 <script>
-	import {
-		groups,
-		scaleLinear,
-		extent,
-		line,
-		curveMonotoneX,
-		
-	} from 'd3';
+	import { groups, scaleLinear, extent, line, curveMonotoneX } from 'd3';
 	import csv from './data/data_graph_1.csv';
 
-  export let lang = 'ua'
+	export let lang = 'ua';
+	export let title = 'Графік кількості повітряних тривог';
+	export let subTitle = 'За кожен рік повномасштабного вторгненя';
 
 	const colors = {
 		2022: '#E30101',
@@ -97,14 +92,40 @@
 	//	return monthesMap.get(monthNum);
 	//}
 
-  let monthsUa = ['Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер', 'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру']
-  let monthsEng = ['Jan', 'Feb', 'Mar', 'КApr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+	let monthsUa = [
+		'Січ',
+		'Лют',
+		'Бер',
+		'Кві',
+		'Тра',
+		'Чер',
+		'Лип',
+		'Сер',
+		'Вер',
+		'Жов',
+		'Лис',
+		'Гру'
+	];
+	let monthsEng = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	];
 </script>
 
 <div class="wrap">
 	<div class="head">
-		<h1>Графік кількості повітряних тривог</h1>
-		<p class="date">За кожен рік повномасштабного вторгненя</p>
+		<h1>{title}</h1>
+		<p class="date">{subTitle}</p>
 	</div>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="chart">
@@ -126,21 +147,21 @@
 					{/each}
 				</g>
 
-        <g class="axis">
-          {#each xScale.ticks(width > 800 ? 12 : 4) as tick}
-            <line
-              x1={xScale(tick)}
-              y1={chartHeight}
-              x2={xScale(tick)}
-              y2={chartHeight + 10}
-              stroke="white"
-              stroke-width={2}
-            />
-            <text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white"
-              >{lang != 'ua' ? monthsEng[tick-1] : monthsUa[tick-1]}</text
-            >
-          {/each}
-        </g>
+				<g class="axis">
+					{#each xScale.ticks(width > 800 ? 12 : 4) as tick}
+						<line
+							x1={xScale(tick)}
+							y1={chartHeight}
+							x2={xScale(tick)}
+							y2={chartHeight + 10}
+							stroke="white"
+							stroke-width={2}
+						/>
+						<text x={xScale(tick)} y={chartHeight + 30} text-anchor="middle" fill="white"
+							>{lang != 'ua' ? monthsEng[tick - 1] : monthsUa[tick - 1]}</text
+						>
+					{/each}
+				</g>
 
 				{#each renderedData as { path, stroke, strokeWidth, opacity }}
 					<path d={path} {stroke} stroke-width={strokeWidth} {opacity} />
