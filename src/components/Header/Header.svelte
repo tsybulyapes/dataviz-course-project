@@ -1,12 +1,14 @@
 <script>
   import CounterV2 from "./CounterV2.svelte";
   import ScrollDown from "./ScrollDown.svelte";
+  import Navigation from "./Navigation.svelte";
   export let headline = ''
 </script>
 
 <div class="header">
   <div class="overlay">
-  <div class="container">
+    <Navigation />
+    <div class="container">
     <CounterV2 text={headline}/>
     <div class="icon">
       <ScrollDown />

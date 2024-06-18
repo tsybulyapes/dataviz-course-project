@@ -138,6 +138,15 @@
 				{/each}
 			</g>
 
+      <line
+				x1={margin.left - 20}
+				y1={chartHeight}
+				x2={chartWidth}
+				y2={chartHeight}
+				stroke="white"
+				stroke-width={2}
+			/>
+
 			{#each dataByObl as row}
 				<circle
 					cx={xScale(row.start)}
@@ -153,14 +162,7 @@
 				/>
 			{/each}
 
-			<line
-				x1={margin.left - 20}
-				y1={chartHeight}
-				x2={chartWidth}
-				y2={chartHeight}
-				stroke="white"
-				stroke-width={2}
-			/>
+			
 		</svg>
 
 		{#if activeCircle}

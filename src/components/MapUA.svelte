@@ -2,6 +2,7 @@
 	import { json, geoMercator, geoPath, groups, scaleLinear } from 'd3';
 	import csv from './data/official_data_uk-raw.csv';
 	import geojson from './data/ukraine-adm-regions.json';
+  import viewport from './tools/useViewportAction';
 
   export let lang = 'ua'
   export let title = 'Мапа кількості повітряних тривог'
@@ -13,6 +14,12 @@
 	let activeObl = null;
 	let positionX = 0;
 	let positionY = 0;
+
+  const options = {
+    threshold: [0.7] // half height of the viewport
+  };
+
+  let animate = false
 
 	export let colors = ['#E30101', '#4D0000'];
 
@@ -62,17 +69,22 @@
 			bind:clientWidth={width}
 			bind:clientHeight={height}
 			on:mousemove={trackTooltip}
+      use:viewport={options}
+      on:enterViewport={() => animate = true}
 		>
 			<svg {width} {height}>
 				{#each counties as obl}
 					{@const name = obl.properties['UA_NAME']}
 					<path
 						d={obl.path}
-						fill={name === 'Луганська область'
+						fill={
+            animate ?
+              name === 'Луганська область'
 							? '#4D0000'
 							: mapData[name]
 								? getColor(mapData[name]['total'])
-								: '#8C8C8C'}
+								: '#8C8C8C'
+              : '#111'}
 						class:pulse={name === 'Луганська область'}
 						on:mousemove={() => {
 							activeObl = obl;
@@ -115,7 +127,6 @@
 		font-family: 'Unbounded', sans-serif;
 		margin-top: 15rem;
 		font-size: 0.85rem;
-		font-family: 'Unbounded', sans-serif;
 		color: white;
 	}
 	main {
@@ -156,6 +167,7 @@
 	path {
 		stroke: black;
 		stroke-width: 0.2px;
+    transition: fill 1.5s ease-out;
 	}
 
 	path:hover {

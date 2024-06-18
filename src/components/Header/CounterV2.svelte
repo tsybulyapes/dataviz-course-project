@@ -1,46 +1,50 @@
 <script>
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy } from 'svelte';
   
+  export let start = 0;
+  export let end = 38980;
+  export let duration = 5000; // in milliseconds
+  export let text = 'повітряних тривог було оголошено в Україні з 24 лютого 2022 року';
+  export let textDelay = 1000; // Delay for text appearance in milliseconds
 
-  export let start = 0
-  export let end = 38980
-  export let duration = 5000 // in milliseconds
-  export let text = 'повітряних тривог було оголошено в Україні з 24 лютого 2022 року'
-  let count = start
-  let interval
-  let step
-  let mounted = false
-  
+  let count = start;
+  let interval;
+  let step;
+  let mounted = false;
+  let showText = false;
 
   const updateCount = () => {
-    step = (end - start) / (duration / 50) // Calculate step based on duration
+    step = (end - start) / (duration / 50); // Calculate step based on duration
     interval = setInterval(() => {
-      count += step
+      count += step;
       if ((step > 0 && count >= end) || (step < 0 && count <= end)) {
-        count = end
-        clearInterval(interval)
+        count = end;
+        clearInterval(interval);
       }
-    }, 50)
-  }
+    }, 50);
+  };
 
   onMount(() => {
-    mounted = true
-    updateCount()
-  })
+    mounted = true;
+    updateCount();
+    setTimeout(() => {
+      showText = true;
+    }, textDelay);
+  });
 
   onDestroy(() => {
-    clearInterval(interval)
-  })
+    clearInterval(interval);
+  });
 </script>
 
 <div class="counter">
   {#if mounted}
-    
-
     <div class="value">
       <p>{Math.round(count)}</p>
     </div>
-    <p class="text-opening">{@html text}</p>
+    
+    <p class="text-opening" style:opacity={showText ? 1 : 0}>{@html text}</p>
+    
   {/if}
 </div>
 
@@ -54,37 +58,41 @@
     color: #fff;
     font-family: 'Unbounded', sans-serif;
   }
-  
+
+  .value {
+    width: fit-content;
+    font-weight: 700;
+    font-size: 8rem;
+    transition: all 1s;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .text-opening {
+    font-size: 2rem;
+    display: block;
+    max-width: 700px;
+    width: 100%;
+    transition: all 1s;
+  }
+
+  @media (max-width: 640px) {
     .value {
-      width: fit-content;
-      font-weight: 700;
-      font-size: 8rem;
+      font-size: 5rem;
     }
-    p {
-        margin: 0;
-      }
     .text-opening {
-      font-size: 2rem;
-      display: block;
-      max-width: 700px;
-      width: 100%;
+      font-size: 1.6rem;
     }
+  }
 
-    @media (max-width: 640px) {
-      .value {
-        font-size: 5rem;
-      } 
-      .text-opening {
-        font-size: 1.6rem;
-      }
+  @media (max-width: 440px) {
+    .value {
+      font-size: 4rem;
     }
-
-    @media (max-width: 440px) {
-      .value {
-        font-size: 4rem;
-      } 
-      .text-opening {
-        font-size: 1.3rem;
-      }
+    .text-opening {
+      font-size: 1.3rem;
     }
+  }
 </style>

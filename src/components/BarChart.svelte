@@ -2,11 +2,16 @@
 	import { scaleLinear, extent, groups } from 'd3';
 	import csv from './data/official_data_uk-raw.csv';
   import { regions } from './store'
+  import viewport from './tools/useViewportAction';
 
   export let lang = 'ua'
 
 	let width = 1000;
 	let height = 900;
+
+  const options = {
+    threshold: [0.5] // half height of the viewport
+  };
 
 	let margin = {
 		top: 40,
@@ -18,6 +23,7 @@
 	let activeBar = null;
 	let positionX = 0;
 	let positionY = 0;
+  let showBar = false
 
 	$: w = width - margin.right;
 	$: h = height - margin.top - margin.bottom;
@@ -93,6 +99,8 @@
 		bind:clientWidth={width}
 		bind:clientHeight={height}
 		on:mousemove={trackTooltip}
+    use:viewport={options}
+    on:enterViewport={() => showBar = true}
 	>
 		<svg {width} {height}>
 			<g>
@@ -117,7 +125,7 @@
 					<rect
 						x={margin.left}
 						y={yScale(index)}
-						width={xScale(d.maxDuration) - xScale(0)}
+						width={showBar ? xScale(d.maxDuration) - xScale(0) : 1}
 						height={barH}
 						fill={'#E30101'}
 						on:mousemove={() => {
@@ -175,6 +183,7 @@
 
 	rect {
 		opacity: 0.5;
+    transition: all 1s;
 	}
 
 	rect:hover {
