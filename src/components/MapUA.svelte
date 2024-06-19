@@ -3,6 +3,7 @@
 	import csv from './data/official_data_uk-raw.csv';
 	import geojson from './data/ukraine-adm-regions.json';
 	import viewport from './tools/useViewportAction';
+	import { regions } from './store';
 
 	export let lang = 'ua';
 	export let title = 'Мапа кількості повітряних тривог';
@@ -116,7 +117,7 @@
 			<div class="stripe"></div>
 			<div class="values">
 				<p>439</p>
-				<p>4220</p>
+				<p>4586</p>
 			</div>
 		</div>
 	</main>
