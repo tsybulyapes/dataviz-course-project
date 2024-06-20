@@ -1,5 +1,6 @@
 <script>
-  import { page } from '$app/stores';  
+  import { page } from '$app/stores'; 
+  import {base} from '$app/paths' 
 	
   $: currentPage = $page.url.pathname
   
@@ -7,8 +8,8 @@
 
 <div class="nav">
   <ul>
-    <li><a href="/" class:active={currentPage === '/'}>UA</a></li>
-    <li><a href="/eng" class:active={currentPage === '/eng'}>EN</a></li>
+    <li><a href={`${base}/`} class:active={currentPage === `${base}/`}>UA</a></li>
+    <li><a href={`${base}/eng`} class:active={currentPage === `${base}/eng`}>EN</a></li>
   </ul>
 </div>
 
