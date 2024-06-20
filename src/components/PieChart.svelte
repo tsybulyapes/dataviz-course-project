@@ -19,14 +19,14 @@
 		{
 			name: {
 				ua: 'З тривогою',
-				en: 'With air raid alarm'
+				en: 'With air raid alert'
 			},
 			fill: '#E30101'
 		},
 		{
 			name: {
 				ua: 'Без тривоги',
-				en: 'Without air raid alarm'
+				en: 'Without air raid alert'
 			},
 			fill: '#4D0000'
 		}

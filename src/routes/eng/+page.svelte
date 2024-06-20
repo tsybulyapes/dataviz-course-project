@@ -18,9 +18,9 @@
 
 	let footerText = [
 		'The project was created as part of the coursework for the discipline of Information Design at the Lviv National Academy of Arts.',
-		'Created by: <strong>Kateryna Berezina.</strong><br />Teacher <strong>Roman Sverdan.</strong><br />Help and support <strong>Oleh Niss.</strong>',
+		'Created by: <strong>Kateryna Berezina.</strong><br />Teacher: <strong>Roman Sverdan.</strong><br />Help and support: <strong>Oleh Niss.</strong>',
 		"Data source: <a href='https://github.com/Vadimkin/ukrainian-air-raid-sirens-dataset?tab=readme-ov-file' target='_blank'>Data on air raid alarms in Ukraine during the full-scale invasion by the russian federation</a>",
-		"<span class='slava'>Glory to Ukraine!</span>"
+		"<span class='slava'><strong>Glory to Ukraine!</strong></span>"
 	];
 </script>
 

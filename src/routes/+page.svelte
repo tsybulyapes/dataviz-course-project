@@ -18,9 +18,9 @@
 
 	let footerText = [
 		'Проєкт створено в рамках навчання у Львівській національній академії мистецтв як курсове завдання з дисципліни Інформаційний дизайн.',
-		'Виконала студентка 3 курсу ГД <strong>Катерина Березіна.</strong><br />Викладач <strong>Роман Свердан.</strong><br />Підтримка та допомога <strong>Олег Нісс.</strong>',
+		'Виконала: <strong>Катерина Березіна.</strong><br />Викладач: <strong>Роман Свердан.</strong><br />Допомога та підтримка: <strong>Олег Нісс.</strong>',
 		"Джерело: <a href='https://github.com/Vadimkin/ukrainian-air-raid-sirens-dataset?tab=readme-ov-file' target='_blank'>Дані повітряних тривог в Україні під час повномасштабного вторгнення рф</a>",
-		"<span class='slava'>Слава Україні!</span>"
+		"<span class='slava'><strong>Слава Україні!</strong></span>"
 	];
 </script>
 
